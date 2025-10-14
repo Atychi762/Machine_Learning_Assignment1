@@ -4,9 +4,11 @@ venv/
 env/
 
 #ignore csv data files
+datasets/
 *.csv
 
 #ignore image files
+images/
 *.png
 *.jpg
 *.jpeg
