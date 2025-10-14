@@ -1,0 +1,6 @@
+import pandas as pd
+
+from sklearn.ensemble import RandomForestClassifier as rf
+from sklearn.svm import LinearSVC as svc
+
+testing_data = pd.read_csv("wildfires_test.csv")
