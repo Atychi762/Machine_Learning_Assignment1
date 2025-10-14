@@ -23,8 +23,8 @@ n_estimators_hyperparameter = 10
 #Seeting up a list to collect the training results
 training_output = []
 
-for max_depth_hyperparameter in range(5, 15, 5):
-    for n_estimators_hyperparameter in range(50, 150, 50):
+for max_depth_hyperparameter in range(5, 105, 5):
+    for n_estimators_hyperparameter in range(50, 2050, 50):
         #Traning the Random Forest Classifier using the varied hyperparameters
         classifier = rf(max_depth=max_depth_hyperparameter,n_estimators=n_estimators_hyperparameter)
         classifier.fit(training_parameters,training_target)
@@ -49,15 +49,25 @@ training_metrics = pd.DataFrame(training_output, columns=["Max Depth","N Estimat
 training_metrics.to_csv("training_metrics.csv", index=False)
 
 #Visualizing the results
+filtered_metrics = training_metrics[training_metrics["N Estimators"] == 1000]
+filtered_metrics = filtered_metrics.sort_values("Max Depth")
+
 plt.subplot(2, 1, 1)
-plt.title("Hyperparameter Tuning accuracy results")
-plt.barh(training_metrics["Max Depth"].unique(), training_metrics["Test Accuracy"].groupby(training_metrics["Max Depth"]).mean())
-plt.ylabel("Max Depth")
+plt.title("Test Accuracy when varying Max Depth (N Estimators=1000)")
+plt.plot(filtered_metrics["Max Depth"], filtered_metrics["Test Accuracy"], marker='.') 
+plt.ylabel("Accuracy (%)")
+plt.xlabel("Max Depth")
+plt.tight_layout(pad=2)
+
+filtered_metrics = training_metrics[training_metrics["Max Depth"] == 50]
+filtered_metrics = filtered_metrics.sort_values("N Estimators")
 
 plt.subplot(2, 1, 2)
-plt.barh(training_metrics["N Estimators"].unique(), training_metrics["Test Accuracy"].groupby(training_metrics["N Estimators"]).mean())
-plt.xlabel("Average Accuracy (%)")
-plt.ylabel("N Estimators")
+plt.title("Test Accuracy when varying N Estimators (Max Depth=50)")
+plt.plot(filtered_metrics["N Estimators"], filtered_metrics["Test Accuracy"], marker='.') 
+plt.ylabel("Accuracy (%)")
+plt.xlabel("N Estimators")
+plt.tight_layout(pad=2)
 
 plt.savefig("hyperparameter_tuning_results.png")
 plt.show()
