@@ -5,3 +5,8 @@ env/
 
 #ignore csv data files
 *.csv
+
+#ignore image files
+*.png
+*.jpg
+*.jpeg
