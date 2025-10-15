@@ -42,4 +42,4 @@ for max_depth_hyperparameter in range(5, 105, 5):
 
 #Collecting the results in a dataframe and saving to a csv file
 training_metrics = pd.DataFrame(training_output, columns=["Max Depth","N Estimators","Training Accuracy","Test Accuracy"])
-training_metrics.to_csv("datasets/training_metrics.csv", index=False)
+training_metrics.to_csv("datasets/random_forest_raining_metrics.csv", index=False)
